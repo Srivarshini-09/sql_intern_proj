@@ -140,5 +140,3 @@ A.AppointmentID = V.AppointmentID WHERE V.VisitID = NEW.VisitID);
 END IF;
 END //
 DELIMITER ;	
-
-select * from bills ;
