@@ -140,3 +140,21 @@ A.AppointmentID = V.AppointmentID WHERE V.VisitID = NEW.VisitID);
 END IF;
 END //
 DELIMITER ;	
+
+-- Generate Reports
+-- visit report
+-- it shows a report of all patients visits
+
+SELECT P.Name AS Patient, D.Name AS Doctor, V.VisitDate, V.Diagnosis
+FROM Visits V
+JOIN Appointments A ON V.AppointmentID = A.AppointmentID
+JOIN Patients P ON A.PatientID = P.PatientID
+JOIN Doctors D ON A.DoctorID = D.DoctorID;
+
+-- Monthly Revenue Report
+-- this report shows total revenue collected in each month , considering only paid bills
+
+SELECT MONTH(B.CreatedAt) AS Month, SUM(B.Amount) AS TotalRevenue  -- CreatedAt used to specify particular date like CreatedAt = '2025-07-10',MONTH('2025-07-10') = 7
+FROM Bills B
+WHERE B.IsPaid = TRUE             -- filters the record to only include bills that have been paid
+GROUP BY MONTH(B.CreatedAt);
